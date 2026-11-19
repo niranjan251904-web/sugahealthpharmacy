@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suga.Health Pharmacy - Medication Stock & Inventory</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sugaink: '#16171A',
+            sugagray: '#4E5057',
+            sugamuted: '#747680',
+            sugalight: '#9DA0AA',
+            sugabg: '#F6F6F2',
+            sugacard: '#FCFCF9',
+            sugaborder: '#E3E3DC',
+            sugalime: '#E2F1A8',
+            sugalimedark: '#233306',
+            sugalimeborder: '#CCE27E',
+            sugamint: '#D8F3E5',
+            sugamintdark: '#0D5936',
+            sugacoral: '#FDE8E8',
+            sugacoraldark: '#A81B1B'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#F6F6F2] text-[#16171A] min-h-screen flex flex-col md:flex-row antialiased">
+
+  <!-- LEFT SIDEBAR / MOBILE RESPONSIVE TOPBAR -->
+  <aside class="w-full md:w-64 bg-transparent p-3.5 sm:p-5 flex flex-col justify-between shrink-0 border-b md:border-b-0 md:border-r border-[#E3E3DC] md:min-h-screen">
+    <div>
+      <!-- Brand Logo Header & Mobile Status -->
+      <div class="flex items-center justify-between mb-3 md:mb-7">
+        <a href="index.html" class="flex items-center group">
+          <img 
+            src="assets/images/suga-logo.png" 
+            alt="suga.health - Live Naturally" 
+            class="h-10 sm:h-12 md:h-14 w-auto max-w-[160px] sm:max-w-[190px] md:max-w-[210px] object-contain transition-transform group-hover:scale-[1.02]"
+          />
+        </a>
+        <div class="flex items-center gap-2 md:hidden">
+          <button onclick="openRestockModal()" class="px-2.5 py-1 rounded-full bg-[#16171A] text-white text-[11px] font-semibold">
+            + Restock
+          </button>
+        </div>
+      </div>
+
+      <nav class="flex md:flex-col gap-1.5 overflow-x-auto pb-1 md:pb-0 text-xs sm:text-sm font-medium scrollbar-none">
+        <a href="index.html" class="nav-link flex items-center justify-between px-3.5 py-2 md:py-2.5 text-[#4E5057] hover:text-[#16171A] whitespace-nowrap shrink-0">
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 stroke-current shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+            <span>Pharmacy Hub</span>
+          </div>
+          <span id="badge-nav-queue" class="ml-2 bg-[#F0F0EA] border border-[#E3E3DC] text-[#16171A] text-[11px] px-2 py-0.2 rounded font-bold font-mono">0</span>
+        </a>
+
+        <a href="shipping.html" class="nav-link flex items-center justify-between px-3.5 py-2 md:py-2.5 text-[#4E5057] hover:text-[#16171A] whitespace-nowrap shrink-0">
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 stroke-current shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+            <span>Delivery & Shipping</span>
+          </div>
+          <span id="badge-nav-shipping" class="ml-2 bg-[#E2F1A8] text-[#233306] border border-[#CCE27E] text-[11px] px-2 py-0.2 rounded font-semibold">0</span>
+        </a>
+
+        <a href="inventory.html" class="nav-link nav-link-active flex items-center justify-between px-3.5 py-2 md:py-2.5 text-[#16171A] whitespace-nowrap shrink-0">
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 stroke-white shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+            <span>Medication Stock</span>
+          </div>
+          <span id="badge-nav-stock-count" class="ml-2 text-xs text-white/80 font-normal">0 items</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Pharmacist Card (Desktop) -->
+    <div class="mt-8 bg-[#FCFCF9] border border-[#E3E3DC] rounded-xl p-3.5 hidden md:block">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-[#F0F0EA] border border-[#E3E3DC] flex items-center justify-center text-[#16171A] font-bold text-xs">
+          PH
+        </div>
+        <div class="overflow-hidden">
+          <h4 class="text-xs font-bold text-[#16171A] truncate">Licensed Pharmacist</h4>
+          <p class="text-[11px] text-[#747680] truncate">Inventory Controller</p>
+        </div>
+      </div>
+      <div class="mt-2 pt-2 border-t border-[#E3E3DC] flex items-center justify-between text-[11px] text-[#747680]">
+        <span class="font-mono">Lic: TN-PH-82914</span>
+        <button onclick="PharmacyDB.loadZeroStockTemplate(); renderInventoryDeck(); showToastNotification('Vault reset: 8 formularies at 0 stock.');" class="text-[#16171A] font-medium hover:underline text-[10px]">Reset (0 Stock)</button>
+      </div>
+    </div>
+  </aside>
+  </aside>
+
+  <!-- MAIN VIEWPORT -->
+  <main class="flex-1 p-4 md:p-8 overflow-y-auto max-w-[1600px] mx-auto w-full flex flex-col justify-between">
+    
+    <div>
+      <!-- HEADER -->
+      <header class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+        <div>
+          <h1 class="text-2xl md:text-3xl font-bold font-editorial text-[#16171A] tracking-tight">Medication Stock & Inventory</h1>
+          <p class="text-xs text-[#747680] mt-1">Live vault quantities, batch lot numbers, storage compliance, and active dispensing demand across all 8 prescribed formulations.</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="openRestockModal()" class="px-3.5 py-2 rounded-full bg-[#16171A] text-white text-xs font-semibold hover:bg-black transition-colors flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            <span>Restock Inventory</span>
+          </button>
+          <button onclick="PharmacyDB.clearInventory(); renderInventoryDeck(); showToastNotification('Central vault cleared to 0 items.');" class="px-3 py-2 rounded-full bg-[#FCFCF9] border border-[#E3E3DC] text-xs font-semibold text-[#747680] hover:text-[#A81B1B] hover:border-[#F8B4B4] transition-colors" title="Wipe all inventory records">
+            Clear Vault (0 SKUs)
+          </button>
+          <a href="index.html" class="px-3.5 py-2 rounded-full bg-[#FCFCF9] border border-[#E3E3DC] text-xs font-semibold text-[#16171A] hover:bg-[#F0F0EA] transition-colors flex items-center gap-1.5">
+            <span>Pharmacy Queue &rarr;</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- SUMMARY KPI METRICS -->
+      <section class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3.5 mb-5 sm:mb-6">
+        <div class="suga-card p-4 flex flex-col justify-between">
+          <span class="text-xs font-semibold text-[#4E5057]">Formulary Formulations</span>
+          <div class="mt-2">
+            <div id="stat-sku-count" class="text-2xl font-bold font-editorial text-[#16171A]">0 Formulations</div>
+            <div class="text-[11px] text-[#747680] mt-0.5">Approved clinical generics & brands</div>
+          </div>
+        </div>
+
+        <div class="suga-card p-4 flex flex-col justify-between">
+          <span class="text-xs font-semibold text-[#4E5057]">Total Inventory Units</span>
+          <div class="mt-2">
+            <div id="stat-total-units" class="text-2xl font-bold font-editorial text-[#16171A]">0</div>
+            <div class="text-[11px] text-[#747680] mt-0.5">Physical units in central vault</div>
+          </div>
+        </div>
+
+        <div class="suga-card p-4 flex flex-col justify-between">
+          <span class="text-xs font-semibold text-[#4E5057]">Cold-Chain Monitored</span>
+          <div class="mt-2">
+            <div id="stat-cold-count" class="text-2xl font-bold font-editorial text-[#0A558C]">0 pens</div>
+            <div class="text-[11px] text-[#747680] mt-0.5">Tirzepatide (Vault C-01: 2°C to 8°C)</div>
+          </div>
+        </div>
+
+        <div class="suga-card p-4 flex flex-col justify-between">
+          <span class="text-xs font-semibold text-[#4E5057]">Stock Health Status</span>
+          <div class="mt-2">
+            <div id="stat-health-status" class="text-2xl font-bold font-editorial text-amber-800">Empty Vault</div>
+            <div class="text-[11px] text-[#747680] mt-0.5">0 units currently stored on shelves</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CATEGORY FILTER TABS & SEARCH -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
+          <button onclick="setInventoryCategory('all')" id="inv-cat-all" class="px-3.5 py-1.5 rounded-full font-semibold bg-[#16171A] text-white transition-colors">All Medicines</button>
+          <button onclick="setInventoryCategory('Weight loss')" id="inv-cat-Weight loss" class="px-3.5 py-1.5 rounded-full font-medium bg-[#FCFCF9] border border-[#E3E3DC] text-[#4E5057] hover:bg-[#F0F0EA] transition-colors">Weight Loss</button>
+          <button onclick="setInventoryCategory('Hair growth')" id="inv-cat-Hair growth" class="px-3.5 py-1.5 rounded-full font-medium bg-[#FCFCF9] border border-[#E3E3DC] text-[#4E5057] hover:bg-[#F0F0EA] transition-colors">Hair Growth</button>
+          <button onclick="setInventoryCategory('Sexual health')" id="inv-cat-Sexual health" class="px-3.5 py-1.5 rounded-full font-medium bg-[#FCFCF9] border border-[#E3E3DC] text-[#4E5057] hover:bg-[#F0F0EA] transition-colors">Sexual Health</button>
+        </div>
+
+        <div class="relative w-full sm:w-72">
+          <svg class="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#747680]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+          </svg>
+          <input 
+            type="text" 
+            id="inv-search" 
+            placeholder="Search generic, brand, or batch..." 
+            oninput="handleInventorySearch(this.value)"
+            class="w-full pl-8 pr-3 py-1.5 bg-[#FCFCF9] border border-[#E3E3DC] rounded-lg text-xs text-[#16171A] placeholder-[#747680] focus:outline-none focus:border-[#16171A] transition-colors"
+          >
+        </div>
+      </div>
+
+      <!-- INTERACTIVE STOCK CARDS DECK -->
+      <div id="inventory-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+        <!-- Rendered dynamically by JavaScript -->
+      </div>
+    </div>
+
+    <!-- GLOBAL COMPLIANT FOOTER -->
+    <footer class="mt-8 pt-6 border-t border-[#E3E3DC] text-xs text-[#747680] pb-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-3">
+        <div class="flex items-center gap-2.5">
+          <img src="assets/images/suga-logo.png" alt="suga.health" class="h-6 w-auto object-contain inline-block" />
+          <span>· Central Dispensing Vault (Lic. TN-PH-82914) · All rights reserved.</span>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="terms.html" class="hover:text-[#16171A] underline">Terms of Service</a>
+          <a href="privacy.html" class="hover:text-[#16171A] underline">Privacy Policy</a>
+          <a href="index.html" class="hover:text-[#16171A]">Pharmacy Hub</a>
+          <a href="shipping.html" class="hover:text-[#16171A]">Shipping & Tracking</a>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- RESTOCK MODAL -->
+  <div id="restock-modal" class="fixed inset-0 modal-backdrop z-50 hidden flex items-center justify-center p-4">
+    <div class="modal-content bg-[#FCFCF9] w-full max-w-md rounded-2xl p-6 relative">
+      <button onclick="closeRestockModal()" class="absolute top-5 right-5 w-7 h-7 rounded-lg bg-[#F0F0EA] flex items-center justify-center text-[#4E5057] hover:bg-[#E8E8E1]">
+        &times;
+      </button>
+
+      <div class="mb-4">
+        <h3 class="text-base font-bold font-editorial text-[#16171A]">Restock Medication Inventory</h3>
+        <p class="text-xs text-[#747680] mt-0.5">Receive new shipment lot into central physical vault</p>
+      </div>
+
+      <form onsubmit="handleRestockSubmit(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-semibold text-[#4E5057] mb-1">Select Medication *</label>
+          <select id="restock-med-select" required class="w-full p-2 bg-[#FCFCF9] border border-[#E3E3DC] rounded-lg text-[#16171A] font-semibold">
+            <!-- Populated dynamically -->
+          </select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-[#4E5057] mb-1">Add Quantity *</label>
+            <input type="number" id="restock-qty-input" required min="1" max="500" value="20" class="w-full p-2 bg-[#FCFCF9] border border-[#E3E3DC] rounded-lg text-[#16171A] font-bold">
+          </div>
+          <div>
+            <label class="block font-semibold text-[#4E5057] mb-1">Batch Number</label>
+            <input type="text" id="restock-batch-input" placeholder="e.g. BATCH-2026-N01" class="w-full p-2 bg-[#FCFCF9] border border-[#E3E3DC] rounded-lg text-[#16171A]">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-[#4E5057] mb-1">Expiry Date</label>
+          <input type="text" id="restock-expiry-input" placeholder="e.g. 12/2028" class="w-full p-2 bg-[#FCFCF9] border border-[#E3E3DC] rounded-lg text-[#16171A]">
+        </div>
+
+        <div class="pt-3 border-t border-[#E3E3DC] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5">
+          <button type="button" onclick="closeRestockModal()" class="w-full sm:w-auto px-4 py-2.5 rounded-full border border-[#E3E3DC] font-semibold text-[#4E5057] hover:bg-[#F0F0EA]">Cancel</button>
+          <button type="submit" class="w-full sm:w-auto px-5 py-2.5 rounded-full bg-[#16171A] text-white font-semibold hover:bg-black transition-colors flex items-center justify-center gap-1.5">
+            <span>Confirm Restock</span>
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="js/data.js"></script>
+  <script>
+    let currentCategory = 'all';
+    let searchQuery = '';
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderInventoryDeck();
+      updateSidebarBadges();
+      populateRestockSelect();
+
+      window.addEventListener("suga_inventory_updated", () => {
+        renderInventoryDeck();
+        updateSidebarBadges();
+        populateRestockSelect();
+      });
+      window.addEventListener("suga_orders_updated", () => {
+        renderInventoryDeck();
+        updateSidebarBadges();
+      });
+    });
+
+    function updateSidebarBadges() {
+      const orders = PharmacyDB.getOrders();
+      const inv = PharmacyDB.getInventory();
+      const queueCount = orders.filter(o => o.status === 'new' || o.status === 'stock_checking').length;
+      const shipCount = orders.filter(o => o.status === 'ready_for_shipping').length;
+      
+      const badgeQ = document.getElementById("badge-nav-queue");
+      const badgeS = document.getElementById("badge-nav-shipping");
+      const badgeStock = document.getElementById("badge-nav-stock-count");
+
+      if (badgeQ) badgeQ.textContent = queueCount;
+      if (badgeS) badgeS.textContent = shipCount;
+      if (badgeStock) badgeStock.textContent = `${inv.length} items`;
+    }
+
+    function populateRestockSelect() {
+      const select = document.getElementById("restock-med-select");
+      if (!select) return;
+      let inv = PharmacyDB.getInventory();
+      // If inventory is empty, show the 8 default formulary choices so user can restock any
+      if (inv.length === 0) {
+        inv = DEFAULT_INVENTORY;
+      }
+      select.innerHTML = inv.map(m => `
+        <option value="${m.id}">${m.genericName} (${m.brandExamples.join(', ')}) - Currently: ${m.currentStock} ${m.unit}</option>
+      `).join('');
+    }
+
+    function setInventoryCategory(cat) {
+      currentCategory = cat;
+      ['all', 'Weight loss', 'Hair growth', 'Sexual health'].forEach(c => {
+        const btn = document.getElementById(`inv-cat-${c}`);
+        if (btn) {
+          if (c === cat) {
+            btn.className = "px-3.5 py-1.5 rounded-full font-semibold bg-[#16171A] text-white transition-colors";
+          } else {
+            btn.className = "px-3.5 py-1.5 rounded-full font-medium bg-[#FCFCF9] border border-[#E3E3DC] text-[#4E5057] hover:bg-[#F0F0EA] transition-colors";
+          }
+        }
+      });
+      renderInventoryDeck();
+    }
+
+    function handleInventorySearch(val) {
+      searchQuery = val.toLowerCase().trim();
+      renderInventoryDeck();
+    }
+
+    function renderInventoryDeck() {
+      const grid = document.getElementById("inventory-grid");
+      if (!grid) return;
+
+      const inventory = PharmacyDB.getInventory();
+      const orders = PharmacyDB.getOrders();
+
+      // Summary KPIs
+      const totalUnits = inventory.reduce((sum, item) => sum + item.currentStock, 0);
+      const lowStockCount = inventory.filter(item => item.currentStock <= item.minThreshold).length;
+      const coldItem = inventory.find(m => m.id === 'MED-TRZ-01');
+
+      const statSku = document.getElementById("stat-sku-count");
+      const statUnits = document.getElementById("stat-total-units");
+      const statCold = document.getElementById("stat-cold-count");
+      const statHealth = document.getElementById("stat-health-status");
+
+      if (statSku) statSku.textContent = `${inventory.length} Formulations`;
+      if (statUnits) statUnits.textContent = totalUnits.toLocaleString();
+      if (statCold) statCold.textContent = `${coldItem ? coldItem.currentStock : 0} pens`;
+
+      if (statHealth) {
+        if (inventory.length === 0 || totalUnits === 0) {
+          statHealth.textContent = "Empty Vault (0 Units)";
+          statHealth.className = "text-2xl font-bold font-editorial text-amber-800";
+        } else if (lowStockCount === 0) {
+          statHealth.textContent = "100% In Stock";
+          statHealth.className = "text-2xl font-bold font-editorial text-emerald-800";
+        } else {
+          statHealth.textContent = `${lowStockCount} Low Stock`;
+          statHealth.className = "text-2xl font-bold font-editorial text-amber-800";
+        }
+      }
+
+      // Filter
+      let filtered = inventory;
+      if (currentCategory !== 'all') {
+        filtered = filtered.filter(m => m.category === currentCategory);
+      }
+      if (searchQuery !== '') {
+        filtered = filtered.filter(m => 
+          m.genericName.toLowerCase().includes(searchQuery) ||
+          m.brandExamples.some(b => b.toLowerCase().includes(searchQuery)) ||
+          m.batchNumber.toLowerCase().includes(searchQuery) ||
+          m.category.toLowerCase().includes(searchQuery)
+        );
+      }
+
+      if (filtered.length === 0) {
+        if (inventory.length === 0) {
+          grid.innerHTML = `
+            <div class="col-span-full suga-card p-12 text-center text-[#747680]">
+              <div class="w-12 h-12 rounded-xl bg-[#F0F0EA] border border-[#E3E3DC] flex items-center justify-center mx-auto mb-3 text-[#16171A]">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                  <path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/>
+                </svg>
+              </div>
+              <h3 class="font-bold font-editorial text-base text-[#16171A]">Central Inventory Vault is Empty</h3>
+              <p class="text-xs text-[#747680] mt-1 max-w-sm mx-auto">No medications are currently stored in stock. Receive a batch shipment or load the 8 approved formulary entries at zero initial stock.</p>
+              <div class="flex items-center justify-center gap-2 mt-5">
+                <button onclick="PharmacyDB.loadZeroStockTemplate(); renderInventoryDeck(); showToastNotification('Loaded 8 formulary formulations with 0 stock.');" class="px-4 py-2 rounded-full bg-[#16171A] text-white text-xs font-semibold hover:bg-black transition-colors">
+                  Load 8 Formularies (0 Stock)
+                </button>
+                <button onclick="openRestockModal()" class="px-4 py-2 rounded-full bg-[#FCFCF9] border border-[#E3E3DC] text-xs font-semibold text-[#16171A] hover:bg-[#F0F0EA] transition-colors">
+                  + Receive Batch Restock
+                </button>
+              </div>
+            </div>
+          `;
+        } else {
+          grid.innerHTML = `
+            <div class="col-span-full suga-card p-12 text-center text-[#747680]">
+              <p class="font-bold text-sm text-[#16171A]">No medications found matching filter</p>
+              <p class="text-xs text-[#747680] mt-1">Try another search term or click All Medicines.</p>
+            </div>
+          `;
+        }
+        return;
+      }
+
+      grid.innerHTML = filtered.map(item => {
+        // Count active pending orders needing this medication
+        const pendingOrders = orders.filter(o => 
+          (o.status === 'new' || o.status === 'stock_checking') &&
+          o.items.some(i => i.medId === item.id)
+        );
+
+        const isZero = item.currentStock === 0;
+        const isLow = item.currentStock <= item.minThreshold;
+        const stockPct = Math.min(100, Math.round((item.currentStock / 100) * 100));
+
+        return `
+          <div class="suga-card p-4 flex flex-col justify-between hover:border-[#C8C8BE] transition-colors">
+            <div>
+              <!-- Top Row: Category & Storage Rule -->
+              <div class="flex items-center justify-between gap-1 mb-2.5">
+                <span class="text-[10px] font-semibold text-[#4E5057] uppercase tracking-wider">${item.category}</span>
+                ${item.isColdChain ? `
+                  <span class="badge-cold text-[10px] px-2 py-0.5 rounded font-semibold inline-flex items-center gap-1">
+                    <svg class="w-3 h-3 text-[#0A558C]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07l14.14-14.14"/>
+                    </svg>
+                    <span>2°C to 8°C Cold-Chain</span>
+                  </span>
+                ` : `
+                  <span class="badge-subtle text-[10px] px-2 py-0.5 rounded text-[#747680]">Room Temp</span>
+                `}
+              </div>
+
+              <!-- Generic Medicine Name -->
+              <h3 class="font-bold font-editorial text-base text-[#16171A] leading-snug">${item.genericName}</h3>
+              <p class="text-[11px] text-[#747680] mt-0.5">${item.form}</p>
+
+              <!-- Commercial Brand Examples Badges -->
+              <div class="mt-3">
+                <span class="text-[10px] text-[#747680] uppercase font-bold tracking-wider block mb-1">Commercial Brand Examples:</span>
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  ${item.brandExamples.map((brand, bIdx) => `
+                    <span class="px-2 py-0.5 rounded text-xs font-semibold ${bIdx === 0 ? 'bg-[#E2F1A8] text-[#233306] border border-[#CCE27E]' : 'bg-[#F0F0EA] border border-[#E3E3DC] text-[#16171A]'}">
+                      ${brand}
+                    </span>
+                  `).join('')}
+                </div>
+              </div>
+
+              <!-- Stock Visual Meter -->
+              <div class="mt-4 pt-3 border-t border-[#E3E3DC]">
+                <div class="flex items-baseline justify-between mb-1.5">
+                  <span class="text-[11px] text-[#747680] font-medium">Available Units:</span>
+                  <div class="flex items-baseline gap-1.5">
+                    <span class="text-xl font-bold font-editorial ${isZero ? 'text-[#A81B1B]' : (isLow ? 'text-amber-700' : 'text-[#16171A]')}">${item.currentStock}</span>
+                    <span class="text-xs text-[#747680]">${item.unit}</span>
+                    ${isZero 
+                      ? '<span class="badge-coral text-[10px] px-1.5 py-0.2 rounded font-semibold ml-1">Out of Stock</span>' 
+                      : (isLow ? '<span class="badge-vault text-[10px] px-1.5 py-0.2 rounded font-semibold ml-1">Low Stock</span>' : '<span class="badge-mint text-[10px] px-1.5 py-0.2 rounded font-semibold ml-1">In Stock</span>')}
+                  </div>
+                </div>
+
+                <!-- Fill bar -->
+                <div class="w-full bg-[#E3E3DC] h-1.5 rounded-full overflow-hidden">
+                  <div class="h-full ${isZero ? 'bg-transparent' : (isLow ? 'bg-amber-600' : 'bg-[#16171A]')} transition-all duration-300" style="width: ${stockPct}%"></div>
+                </div>
+
+                <div class="flex items-center justify-between text-[10px] text-[#747680] mt-2">
+                  <span>Batch: <strong class="text-[#16171A] font-mono">${item.batchNumber}</strong></span>
+                  <span>Exp: <strong class="text-[#16171A] font-mono">${item.expiryDate}</strong></span>
+                </div>
+              </div>
+
+              <!-- Active Demand / Out of stock Callout -->
+              <div class="mt-3 text-[11px] p-2 rounded-lg ${isZero ? 'bg-[#FDE8E8] border border-[#F8B4B4] text-[#A81B1B]' : (pendingOrders.length > 0 ? 'bg-[#F8FCEB] border border-[#CCE27E] text-[#233306]' : 'bg-[#F0F0EA] text-[#747680]')}">
+                ${isZero 
+                  ? '<strong>0 Units in Stock:</strong> Central vault has no available inventory. Requires restock.' 
+                  : (pendingOrders.length > 0 ? `<strong>${pendingOrders.length} pending order${pendingOrders.length > 1 ? 's' : ''}</strong> waiting for this medicine.` : 'No pending orders waiting for this item.')}
+              </div>
+            </div>
+
+            <!-- Interactive Quick Controls -->
+            <div class="mt-4 pt-3 border-t border-[#E3E3DC] flex items-center justify-between gap-2">
+              <div class="flex items-center gap-1">
+                <button onclick="adjustStock('${item.id}', -1)" title="Decrease by 1" class="w-7 h-7 rounded-lg bg-[#F0F0EA] border border-[#E3E3DC] flex items-center justify-center font-bold text-[#16171A] hover:bg-[#E8E8E1] transition-colors">
+                  -
+                </button>
+                <button onclick="adjustStock('${item.id}', 1)" title="Increase by 1" class="w-7 h-7 rounded-lg bg-[#F0F0EA] border border-[#E3E3DC] flex items-center justify-center font-bold text-[#16171A] hover:bg-[#E8E8E1] transition-colors">
+                  +
+                </button>
+              </div>
+
+              <button onclick="openRestockModal('${item.id}')" class="px-3 py-1 rounded-full bg-[#FCFCF9] border border-[#E3E3DC] text-[11px] font-semibold text-[#16171A] hover:bg-[#F0F0EA] transition-colors">
+                Restock Lot
+              </button>
+            </div>
+
+          </div>
+        `;
+      }).join('');
+    }
+
+    function adjustStock(medId, delta) {
+      const res = PharmacyDB.updateStock(medId, delta);
+      if (res.success) {
+        showToastNotification(`Adjusted ${res.item.genericName}: now ${res.item.currentStock} ${res.item.unit}`);
+      }
+    }
+
+    function openRestockModal(medId = null) {
+      populateRestockSelect();
+      if (medId) {
+        const select = document.getElementById("restock-med-select");
+        if (select) select.value = medId;
+      }
+      document.getElementById("restock-modal").classList.remove("hidden");
+    }
+
+    function closeRestockModal() {
+      document.getElementById("restock-modal").classList.add("hidden");
+    }
+
+    function handleRestockSubmit(e) {
+      e.preventDefault();
+      const medId = document.getElementById("restock-med-select").value;
+      const qty = document.getElementById("restock-qty-input").value;
+      const batch = document.getElementById("restock-batch-input").value;
+      const expiry = document.getElementById("restock-expiry-input").value;
+
+      const res = PharmacyDB.restock(medId, qty, batch, expiry);
+      if (res.success) {
+        showToastNotification(`Restocked +${qty} ${res.item.unit} of ${res.item.genericName}!`, "success");
+        closeRestockModal();
+      }
+    }
+
+    function showToastNotification(msg, type = "info") {
+      const container = document.getElementById("toast-container");
+      const toast = document.createElement("div");
+      let bg = "bg-[#16171A] text-white";
+      if (type === "success") bg = "bg-emerald-800 text-white";
+
+      toast.className = `toast px-4 py-2.5 rounded-lg text-xs font-semibold ${bg} flex items-center gap-2.5 max-w-sm`;
+      toast.innerHTML = `
+        <span>${msg}</span>
+        <button onclick="this.parentElement.remove()" class="ml-auto opacity-70 hover:opacity-100 text-sm">&times;</button>
+      `;
+
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.remove();
+      }, 4000);
+    }
+  </script>
+</body>
+</html>

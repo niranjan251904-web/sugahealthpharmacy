@@ -1,0 +1,294 @@
+/* Suga.Health Dispensing Hub & Logistics Stylesheet
+ * Hand-crafted clinical system typography and neutral surface tokens
+ * Distinctive pairing: Newsreader (Editorial Clinical) + Plus Jakarta Sans (Operational)
+ */
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  --font-serif: 'Newsreader', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  
+  /* Tinted off-white surfaces - zero pure white wash */
+  --bg-page: #F6F6F2;
+  --bg-card: #FCFCF9;
+  --bg-card-hover: #F9F9F4;
+  --bg-subtle: #F0F0EA;
+  --bg-muted: #E8E8E1;
+  
+  /* Deep graphite ink */
+  --ink: #16171A;
+  --ink-secondary: #4E5057;
+  --ink-muted: #747680;
+  --ink-light: #9DA0AA;
+  
+  /* Hairline borders - depth created through line and spacing, not blur shadows */
+  --border-subtle: #E3E3DC;
+  --border-strong: #C8C8BE;
+  --border-focus: #16171A;
+  
+  /* Restrained Suga clinical accents */
+  --accent-lime: #E2F1A8;
+  --accent-lime-border: #CCE27E;
+  --accent-lime-dark: #233306;
+  --accent-lime-surface: #F8FCEB;
+  
+  --mint-bg: #D8F3E5;
+  --mint-text: #0D5936;
+  --mint-border: #B6E6CE;
+  
+  --coral-bg: #FDE8E8;
+  --coral-text: #A81B1B;
+  --coral-border: #F8B4B4;
+  
+  --cold-bg: #E3EFF9;
+  --cold-text: #0A558C;
+  --cold-border: #C1DEEF;
+  
+  --vault-bg: #F7EEDB;
+  --vault-text: #6A440D;
+  --vault-border: #E8D5B0;
+
+  /* Systematic radius hierarchy */
+  --radius-chip: 4px;
+  --radius-tag: 6px;
+  --radius-input: 8px;
+  --radius-panel: 10px;
+  --radius-card: 14px;
+  --radius-modal: 18px;
+  --radius-pill: 9999px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-page);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+.font-editorial {
+  font-family: var(--font-serif);
+}
+
+/* Custom minimal scrollbar */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--radius-pill);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-light);
+}
+
+/* Base Card Anatomy - Hairline border, no drop shadow */
+.suga-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  box-shadow: none;
+}
+
+.suga-card-interactive {
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.suga-card-interactive:hover {
+  background-color: var(--bg-card-hover);
+  border-color: var(--border-strong);
+}
+
+/* Active Selected Order */
+.order-card-selected {
+  background-color: var(--accent-lime-surface) !important;
+  border: 1.5px solid var(--accent-lime-border) !important;
+}
+
+/* Navigation items */
+.nav-link {
+  border-radius: var(--radius-pill);
+  transition: background-color 0.12s ease, color 0.12s ease;
+  color: var(--ink-secondary);
+}
+.nav-link:hover:not(.nav-link-active) {
+  background-color: var(--bg-subtle);
+  color: var(--ink);
+}
+.nav-link-active {
+  background-color: var(--ink) !important;
+  color: #F8F8F5 !important;
+}
+.nav-link-active svg {
+  stroke: #F8F8F5 !important;
+}
+
+/* Clinical Status Badges */
+.badge-lime {
+  background-color: var(--accent-lime);
+  color: var(--accent-lime-dark);
+  border: 1px solid var(--accent-lime-border);
+  border-radius: var(--radius-tag);
+}
+
+.badge-mint {
+  background-color: var(--mint-bg);
+  color: var(--mint-text);
+  border: 1px solid var(--mint-border);
+  border-radius: var(--radius-tag);
+}
+
+.badge-coral {
+  background-color: var(--coral-bg);
+  color: var(--coral-text);
+  border: 1px solid var(--coral-border);
+  border-radius: var(--radius-tag);
+}
+
+.badge-cold {
+  background-color: var(--cold-bg);
+  color: var(--cold-text);
+  border: 1px solid var(--cold-border);
+  border-radius: var(--radius-tag);
+}
+
+.badge-vault {
+  background-color: var(--vault-bg);
+  color: var(--vault-text);
+  border: 1px solid var(--vault-border);
+  border-radius: var(--radius-tag);
+}
+
+.badge-dark {
+  background-color: var(--ink);
+  color: #F8F8F5;
+  border-radius: var(--radius-tag);
+}
+
+.badge-subtle {
+  background-color: var(--bg-subtle);
+  color: var(--ink-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-tag);
+}
+
+/* Functional Checkbox */
+.custom-checkbox {
+  appearance: none;
+  width: 17px;
+  height: 17px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  background-color: var(--bg-card);
+  position: relative;
+  vertical-align: middle;
+}
+.custom-checkbox:checked {
+  background-color: var(--ink);
+  border-color: var(--ink);
+}
+.custom-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 4px;
+  height: 8px;
+  border: solid #FFFFFF;
+  border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg);
+}
+
+/* Skeleton Loading State */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #ECECE5 0%,
+    #F4F4EE 50%,
+    #ECECE5 100%
+  );
+  background-size: 200% 100%;
+  animation: skeletonPulse 1.4s ease-in-out infinite;
+  border-radius: var(--radius-tag);
+}
+
+@keyframes skeletonPulse {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Dialog & Modals */
+.modal-backdrop {
+  background-color: rgba(22, 23, 26, 0.45);
+}
+
+.modal-content {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-modal);
+}
+
+/* Notification Toast */
+#toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  border-radius: var(--radius-panel);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Print Styles */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printable-label-content, #printable-label-content * {
+    visibility: visible;
+  }
+  #printable-label-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+  .no-print {
+    display: none !important;
+  }
+}

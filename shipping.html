@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suga.Health Delivery & Shipping - Medication Fulfillment Logistics</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sugaink: '#16171A',
+            sugagray: '#4E5057',
+            sugamuted: '#747680',
+            sugalight: '#9DA0AA',
+            sugabg: '#F6F6F2',
+            sugacard: '#FCFCF9',
+            sugaborder: '#E3E3DC',
+            sugalime: '#E2F1A8',
+            sugalimedark: '#233306',
+            sugalimeborder: '#CCE27E',
+            sugamint: '#D8F3E5',
+            sugamintdark: '#0D5936',
+            sugacoral: '#FDE8E8',
+            sugacoraldark: '#A81B1B'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#F6F6F2] text-[#16171A] min-h-screen flex flex-col md:flex-row antialiased">
+
+  <!-- LEFT SIDEBAR / MOBILE RESPONSIVE TOPBAR -->
+  <aside class="w-full md:w-64 bg-transparent p-3.5 sm:p-5 flex flex-col justify-between shrink-0 border-b md:border-b-0 md:border-r border-[#E3E3DC] md:min-h-screen">
+    <div>
+      <!-- Brand Logo Header & Mobile Status -->
+      <div class="flex items-center justify-between mb-3 md:mb-7">
+        <a href="index.html" class="flex items-center group">
+          <img 
+            src="assets/images/suga-logo.png" 
+            alt="suga.health - Live Naturally" 
+            class="h-8 sm:h-9 md:h-11 w-auto max-w-[150px] sm:max-w-[180px] md:max-w-[190px] object-contain transition-transform group-hover:scale-[1.02]"
+          />
+        </a>
+        <div class="flex items-center gap-2 md:hidden">
+          <a href="index.html" class="px-2.5 py-1 rounded-full bg-[#16171A] text-white text-[11px] font-semibold">
+            Pharmacy Desk
+          </a>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="flex md:flex-col gap-1.5 overflow-x-auto pb-1 md:pb-0 text-xs sm:text-sm font-medium scrollbar-none">
+        <a href="index.html" class="nav-link flex items-center justify-between px-3.5 py-2 md:py-2.5 text-[#4E5057] hover:text-[#16171A] whitespace-nowrap shrink-0">
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 stroke-current shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+            <span>Pharmacy Hub</span>
+          </div>
+          <span id="badge-nav-queue" class="ml-2 bg-[#F0F0EA] border border-[#E3E3DC] text-[#16171A] text-[11px] px-2 py-0.2 rounded font-bold font-mono">0</span>
+        </a>
+
+        <a href="shipping.html" class="nav-link nav-link-active flex items-center justify-between px-3.5 py-2 md:py-2.5 text-[#16171A] whitespace-nowrap shrink-0">
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 stroke-white shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+            <span>Delivery & Shipping</span>
+          </div>
+          <span id="badge-nav-shipping" class="ml-2 bg-[#E2F1A8] text-[#233306] border border-[#CCE27E] text-[11px] px-2 py-0.2 rounded font-semibold">0</span>
+        </a>
+
+        <a href="inventory.html" class="nav-link flex items-center justify-between px-3.5 py-2 md:py-2.5 text-[#4E5057] hover:text-[#16171A] whitespace-nowrap shrink-0">
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 stroke-current shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+            <span>Medication Stock</span>
+          </div>
+          <span class="ml-2 text-xs text-[#747680] font-normal">8 items</span>
+        </a>
+
+        <a href="index.html#activity-logs" class="nav-link flex items-center justify-between px-3.5 py-2 md:py-2.5 text-[#4E5057] hover:text-[#16171A] whitespace-nowrap shrink-0 hidden md:flex">
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 stroke-current shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            <span>Dispensing Log</span>
+          </div>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Dispatcher Station Info Card (Desktop) -->
+    <div class="mt-8 bg-[#FCFCF9] border border-[#E3E3DC] rounded-xl p-3.5 hidden md:block">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-[#F0F0EA] border border-[#E3E3DC] flex items-center justify-center text-[#16171A] font-bold text-xs">
+          DH
+        </div>
+        <div class="overflow-hidden">
+          <h4 class="text-xs font-bold text-[#16171A] truncate">Suga Logistics Hub</h4>
+          <p class="text-[11px] text-[#747680] truncate">Cold-Chain & Priority Transport</p>
+        </div>
+      </div>
+      <div class="mt-2.5 pt-2 border-t border-[#E3E3DC] flex items-center justify-between text-[11px] text-[#747680]">
+        <span class="font-mono">Hub: BLR-CNTRL-01</span>
+        <a href="index.html" class="text-[#16171A] font-semibold hover:underline text-[11px]">Pharmacy Desk &rarr;</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN VIEWPORT -->
+  <main class="flex-1 p-4 md:p-8 overflow-y-auto max-w-[1600px] mx-auto w-full">
+    
+    <!-- TOP HEADER -->
+    <header class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+      <div>
+        <h1 class="text-2xl md:text-3xl font-bold font-editorial text-[#16171A] tracking-tight">Delivery & Shipping Logistics</h1>
+        <p class="text-xs text-[#747680] mt-1">Manage orders transferred from stock verification, track live courier transit milestones, and generate courier dispatch manifests.</p>
+      </div>
+
+      <!-- Search and Add Order -->
+      <div class="flex items-center gap-2.5">
+        <div class="relative w-full md:w-80">
+          <svg class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#747680]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+          </svg>
+          <input 
+            type="text" 
+            id="shipping-search" 
+            placeholder="Search tracking, patient, or city..." 
+            oninput="handleShippingSearch(this.value)"
+            class="w-full pl-9 pr-3.5 py-2 bg-[#FCFCF9] border border-[#E3E3DC] rounded-lg text-xs text-[#16171A] placeholder-[#747680] focus:outline-none focus:border-[#16171A] transition-colors"
+          >
+        </div>
+        <a href="index.html" class="px-3.5 py-2 rounded-full bg-[#FCFCF9] border border-[#E3E3DC] text-xs font-semibold text-[#16171A] hover:bg-[#F0F0EA] transition-colors flex items-center gap-1.5 shrink-0">
+          <span>+ Pharmacy Queue</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- METRICS ROW: 4 CLINICAL LOGISTICS STAGES -->
+    <section class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3.5 mb-5 sm:mb-6">
+      <!-- Card 1: Awaiting Pickup -->
+      <div class="suga-card p-4 flex flex-col justify-between">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-semibold text-[#4E5057]">Awaiting Courier Pickup</span>
+          <span class="badge-lime text-[11px] px-2 py-0.5 rounded font-semibold">Packed</span>
+        </div>
+        <div>
+          <div id="metric-awaiting-count" class="text-2xl font-bold font-editorial text-[#16171A]">0</div>
+          <div class="text-[11px] text-[#747680] mt-0.5">Packaged and verified by pharmacy</div>
+        </div>
+      </div>
+
+      <!-- Card 2: In Transit -->
+      <div class="suga-card p-4 flex flex-col justify-between">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-semibold text-[#4E5057]">Active In Transit</span>
+          <span class="badge-dark text-[11px] px-2 py-0.5 rounded font-medium">In Transit</span>
+        </div>
+        <div>
+          <div id="metric-transit-count" class="text-2xl font-bold font-editorial text-[#16171A]">0</div>
+          <div class="text-[11px] text-[#747680] mt-0.5">Express air and road lines</div>
+        </div>
+      </div>
+
+      <!-- Card 3: Out for Delivery -->
+      <div class="suga-card p-4 flex flex-col justify-between">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-semibold text-[#4E5057]">Out for Delivery</span>
+          <span class="badge-subtle text-[11px] px-2 py-0.5 rounded font-medium">Last Mile</span>
+        </div>
+        <div>
+          <div id="metric-out-count" class="text-2xl font-bold font-editorial text-[#16171A]">0</div>
+          <div class="text-[11px] text-[#747680] mt-0.5">Assigned to local field couriers</div>
+        </div>
+      </div>
+
+      <!-- Card 4: Delivered -->
+      <div class="suga-card p-4 flex flex-col justify-between">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-semibold text-[#4E5057]">Delivered Shipments</span>
+          <span class="badge-mint text-[11px] px-2 py-0.5 rounded font-semibold">Confirmed</span>
+        </div>
+        <div>
+          <div id="metric-delivered-count" class="text-2xl font-bold font-editorial text-[#16171A]">0</div>
+          <div class="text-[11px] text-[#747680] mt-0.5">Verified with recipient signature & OTP</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILTER TABS & CARRIER FILTER -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
+        <button onclick="setShippingStatusFilter('all')" id="ship-tab-all" class="px-3.5 py-1.5 rounded-full font-semibold bg-[#16171A] text-white transition-colors">
+          All Shipments <span id="ship-count-all" class="ml-1 opacity-80">(0)</span>
+        </button>
+        <button onclick="setShippingStatusFilter('ready_for_shipping')" id="ship-tab-ready_for_shipping" class="px-3.5 py-1.5 rounded-full font-semibold bg-[#FCFCF9] border border-[#E3E3DC] text-[#4E5057] hover:bg-[#F0F0EA] transition-colors">
+          Awaiting Pickup <span id="ship-count-ready" class="ml-1 opacity-80">(0)</span>
+        </button>
+        <button onclick="setShippingStatusFilter('in_transit')" id="ship-tab-in_transit" class="px-3.5 py-1.5 rounded-full font-semibold bg-[#FCFCF9] border border-[#E3E3DC] text-[#4E5057] hover:bg-[#F0F0EA] transition-colors">
+          In Transit <span id="ship-count-transit" class="ml-1 opacity-80">(0)</span>
+        </button>
+        <button onclick="setShippingStatusFilter('delivered')" id="ship-tab-delivered" class="px-3.5 py-1.5 rounded-full font-semibold bg-[#FCFCF9] border border-[#E3E3DC] text-[#4E5057] hover:bg-[#F0F0EA] transition-colors">
+          Delivered <span id="ship-count-delivered" class="ml-1 opacity-80">(0)</span>
+        </button>
+      </div>
+
+      <!-- Carrier Partner Filter -->
+      <div class="flex items-center gap-2 text-xs">
+        <span class="text-[#747680] font-medium">Courier:</span>
+        <select id="carrier-filter-select" onchange="handleCarrierChange(this.value)" class="bg-[#FCFCF9] border border-[#E3E3DC] rounded-lg px-2.5 py-1.5 text-xs text-[#16171A] focus:outline-none focus:border-[#16171A]">
+          <option value="all">All Carriers</option>
+          <option value="Blue Dart">Blue Dart Express</option>
+          <option value="Delhivery">Delhivery Healthcare</option>
+          <option value="FedEx">FedEx Priority</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- SHIPMENTS CONTAINER -->
+    <div id="shipments-container" class="space-y-3.5">
+      <!-- Populated dynamically by shipping.js -->
+    </div>
+
+    <!-- FOOTER WITH MANDATORY COMPLIANCE & LEGAL LINKS -->
+    <footer class="mt-12 pt-6 border-t border-[#E3E3DC] text-xs text-[#747680] pb-8">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="flex items-center gap-2.5">
+          <img src="assets/images/suga-logo.png" alt="suga.health" class="h-6 w-auto object-contain inline-block" />
+          <span>· Central Dispensing & Cold-Chain Shipping Logistics Hub · Licensed Pharmacy Facility TN-PH-82914.</span>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="terms.html" class="hover:text-[#16171A] underline">Terms of Service</a>
+          <a href="privacy.html" class="hover:text-[#16171A] underline">Privacy Policy</a>
+          <a href="inventory.html" class="hover:text-[#16171A]">Medication Stock</a>
+          <a href="index.html" class="hover:text-[#16171A]">Pharmacy Hub</a>
+        </div>
+      </div>
+      <div class="mt-2 text-[11px] text-[#9DA0AA]">
+        Clinical fulfillment overseen by Dr. Arulprakash, Dr. Aishwarya Meenaloshini, Dr. S. C. Vivekanandhan, and Dr. Abi Sindhuja. Cold-chain storage temperature continuously logged at 2°C to 8°C.
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- LIVE DELIVERY TRACKER MODAL -->
+  <div id="tracker-modal" class="fixed inset-0 modal-backdrop z-50 hidden flex items-center justify-center p-4">
+    <div class="modal-content bg-[#FCFCF9] w-full max-w-xl rounded-2xl p-6 md:p-7 relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeTrackerModal()" class="absolute top-5 right-5 w-7 h-7 rounded-lg bg-[#F0F0EA] flex items-center justify-center text-[#4E5057] hover:bg-[#E8E8E1]">
+        &times;
+      </button>
+
+      <div id="tracker-modal-content">
+        <!-- Rendered by shipping.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- DISPATCH COURIER SELECTION MODAL -->
+  <div id="dispatch-modal" class="fixed inset-0 modal-backdrop z-50 hidden flex items-center justify-center p-4">
+    <div class="modal-content bg-[#FCFCF9] w-full max-w-md rounded-2xl p-6 relative">
+      <button onclick="closeDispatchModal()" class="absolute top-5 right-5 w-7 h-7 rounded-lg bg-[#F0F0EA] flex items-center justify-center text-[#4E5057] hover:bg-[#E8E8E1]">
+        &times;
+      </button>
+
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-9 h-9 rounded-lg bg-[#F0F0EA] flex items-center justify-center text-[#16171A]">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+        </div>
+        <div>
+          <h3 class="text-base font-bold font-editorial text-[#16171A]">Dispatch Medication Parcel</h3>
+          <p class="text-[11px] text-[#747680]">Hand over sealed parcel to authorized medical courier</p>
+        </div>
+      </div>
+
+      <input type="hidden" id="dispatch-order-id">
+
+      <div class="space-y-3 text-xs mb-5">
+        <div>
+          <label class="block font-semibold text-[#4E5057] mb-1">Select Courier Partner:</label>
+          <select id="dispatch-carrier-select" class="w-full p-2 bg-[#FCFCF9] border border-[#E3E3DC] rounded-lg text-[#16171A] font-semibold">
+            <option value="Blue Dart Express Health">Blue Dart Express Health (Air Priority)</option>
+            <option value="Delhivery Healthcare">Delhivery Healthcare Logistics</option>
+            <option value="FedEx Priority Health">FedEx Priority Cold-Chain</option>
+            <option value="Shadowfax Local Express">Shadowfax Local Same-Day</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-[#4E5057] mb-1">Courier Pickup Agent Name / Contact:</label>
+          <input type="text" id="dispatch-agent-input" placeholder="e.g. Ramesh Kumar (+91 98401 99281)" class="w-full p-2 bg-[#FCFCF9] border border-[#E3E3DC] rounded-lg text-[#16171A]">
+        </div>
+
+        <div class="bg-[#F8FCEB] p-2.5 rounded-lg border border-[#CCE27E] text-[11px] text-[#233306]">
+          Tamper-evident seal verified. Cold-chain pouch packed with temperature sensor.
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-2.5">
+        <button onclick="closeDispatchModal()" class="px-4 py-2 rounded-full border border-[#E3E3DC] text-xs font-semibold text-[#4E5057] hover:bg-[#F0F0EA]">Cancel</button>
+        <button onclick="confirmDispatch()" class="px-5 py-2 rounded-full bg-[#16171A] text-white text-xs font-semibold hover:bg-black flex items-center gap-1.5">
+          <span>Confirm Dispatch</span>
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toast-container"></div>
+
+  <!-- SCRIPTS -->
+  <script src="js/data.js"></script>
+  <script src="js/shipping.js"></script>
+</body>
+</html>

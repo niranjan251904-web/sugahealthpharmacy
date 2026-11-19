@@ -1,0 +1,20 @@
+{
+  "name": "suga-health-pharmacy",
+  "version": "1.0.0",
+  "description": "Suga.Health Pharmacy Dispensing, Stock Verification & Delivery Shipping Platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "serve": "node server.js"
+  },
+  "keywords": [
+    "pharmacy",
+    "healthcare",
+    "telehealth",
+    "stock-verification",
+    "shipping",
+    "suga-health"
+  ],
+  "author": "Suga Health Engineering",
+  "license": "ISC"
+}
